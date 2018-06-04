@@ -1,0 +1,64 @@
+
+<html>
+
+	<head>
+	<title>Sample client by Usman Sabir</title>
+	
+	</head>
+	
+	<body>
+	
+	Web SOAP Client
+	<button onclick="testSoap()" >Get Cart</button> <br /><br /><br />
+
+	JSON: (check console for result object) <br /> 
+	<textarea id="txtCart"  rows="30" cols="80" >
+
+	</textarea>
+	
+	
+	<script>
+		
+		function testSoap(){
+			
+			$.soap({
+				method: 'GetCart',
+				SOAPAction: 'urn:TestOrderService/GetCart',
+				data: {},
+				success: function (soapResponse) {
+					console.log('success');
+					var content = soapResponse.content;
+					$('#txtCart').text(content);
+					var result = $.parseJSON(content);
+					console.log(result.d);					
+				},
+				error: function (SOAPResponse) {
+					console.log('error');
+					console.error(SOAPResponse);
+				}
+			});
+	
+		}
+	</script>
+	
+	
+	<script type='text/javascript' src='https://code.jquery.com/jquery-3.1.1.js'></script>
+	<script src="js/jquery.soap.js"></script>
+	<script src="js/jquery.doedje.xml2json.js"></script>
+	
+		<script>
+			$( document ).ready(function() {
+		
+				$.soap({
+					url: 'http://engros-kogs.smarttest.dk/services/test/TestOrderService.svc/',
+					error: function (soapResponse) {
+						// show error
+						console.log('error');
+						console.error(soapResponse);
+					}
+				});
+			});
+		</script>
+
+	</body>
+	</html>
